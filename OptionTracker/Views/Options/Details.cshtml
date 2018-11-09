@@ -1,0 +1,80 @@
+﻿@model OptionTracker.Models.Option;
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="row">
+    <div class="col"><h2>Option Details</h2></div>
+    <div class="col">
+        <div class="text-right mt-3">
+            <a class="btn btn-primary btn-sm" asp-controller="Options" asp-action="Create" asp-route-id="@Model.Trades.Tradeid">Add Option</a>
+            <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@Model.Trades.Tradeid">Edit Trade</a>
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div>
+
+    <div class="container border rounded">
+        <div class="pt-3 pb-3">
+
+
+            <div class="row headers">
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => Model.Trades.StockSymbol)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => Model.ExpirationDate)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => Model.StrikePrice)
+                </div>                
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => Model.Quantity)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => Model.DateEntered)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => Model.EntryPrice)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>@Html.DisplayFor(model => Model.Trades.StockSymbol)</strong>
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => Model.ExpirationDate)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => Model.StrikePrice)
+                </div>                
+                <div class="col-sm">
+                    @Html.DisplayFor(model => Model.Quantity)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => Model.DateEntered)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => Model.EntryPrice)
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+ 
+ 
+<div class="row">
+    <div class="col">
+        <div class="text-left mt-3">
+            <a class="btn btn-secondary btn-sm" asp-action="Index">Back to Option List</a>
+        </div>
+    </div>
+</div>

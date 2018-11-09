@@ -1,0 +1,32 @@
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    var defaultImage = "/images/Member-Images/default-image.png";
+    var PhotoLocation = UserManager.GetUserAsync(User).Result.PhotoLocation;
+    if(PhotoLocation != null)
+    {
+        defaultImage = PhotoLocation;
+    }
+
+    <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })" method="post" id="logoutForm" class="navbar-right">
+        <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage"><img class="img-responsive rounded-circle" src="@defaultImage" style="width:30px;height:30px;"> @UserManager.GetUserAsync(User).Result.Firstname @UserManager.GetUserAsync(User).Result.Lastname!</a>
+            </li>
+            <li class="nav-item">
+                <button type="submit" class="btn btn-link navbar-btn nav-link">Logout</button>
+            </li>
+        </ul>
+    </form>
+}
+else
+{
+    <ul class="navbar-nav navbar-collapse justify-content-end">
+        <li class="nav-item"><a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Register</a></li>
+        <li class="nav-item"><a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Login</a></li>
+    </ul>
+}

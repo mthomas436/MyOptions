@@ -1,0 +1,77 @@
+﻿
+@using OptionTracker.Extensions
+@model OptionTracker.Models.ViewModels.TradeListVm
+
+@{
+    ViewData["Title"] = "Index";
+    var trade = Model.Trade;
+}
+
+ 
+<div class="container mt-3">
+    <div class="row">
+        <div class="col">
+            <h2>My Trades</h2>
+        </div>
+        <div class="col text-right">
+            <a asp-action="Create" class="btn btn-primary">Create New Trade</a>
+        </div>
+    </div>
+</div>
+
+<div>Full Name: @User.GetCurrentUserFullName()</div>
+
+<table class="table mt-5">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(t => t.Trade.StockSymbol)
+            </th>
+            <th>
+                @Html.DisplayNameFor(t => t.Trade.Description)
+            </th>
+            <th>
+                @Html.DisplayNameFor(t => t.Trade.DateEntered)
+            </th>
+            <th>
+                @Html.DisplayNameFor(t => t.Trade.DateClosed)
+            </th>
+            <th>
+                @Html.DisplayNameFor(t => t.Trade.TradeTypeId)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Trades)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StockSymbol)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+
+                <td>
+                    @{
+                        var formattedDate = item.DateEntered.ToString("MM/dd/yyyy");
+                    }
+                    @formattedDate
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DateClosed)
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.TradeTypes.Description)
+                </td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-action="Edit" asp-route-id="@item.Tradeid">Edit</a>
+                    <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.Tradeid">Details</a> 
+                    <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Tradeid">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
