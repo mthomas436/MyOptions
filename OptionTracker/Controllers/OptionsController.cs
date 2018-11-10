@@ -138,7 +138,13 @@ namespace OptionTracker.Controllers
                     optionfromDb.Commission = option.Commission;
                     optionfromDb.Notes = option.Notes;
 
- 
+                    if(option.ExitPrice > 0)
+                    {
+                        optionfromDb.ExitPrice = option.ExitPrice;
+                        optionfromDb.DateClosed = DateTime.Now;
+                    }
+                    
+
 
                     await _repo.UpdateOption(optionfromDb);
 

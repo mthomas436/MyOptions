@@ -84,7 +84,7 @@
     <div class="row">
         <div class="col">
             <div class="form-group">
-                <a class="btn btn-secondary" asp-controller="Trades" asp-action="Details" asp-route-id="@option.Trades.Tradeid">Back to Option List</a>
+                <a class="btn btn-secondary" asp-controller="Trades" asp-action="Details" asp-route-id="@option.Trades.Tradeid" onclick="return checkForClose();">Back to Option List</a>
                 <input type="submit" value="Save Changes" class="btn btn-primary" />
             </div>
         </div>
@@ -107,5 +107,14 @@
             $('.datepickr').datepicker("setDate", new Date());
             $('.ttip').tooltip();
         });
+
+        function checkForClose() {
+            if (jQuery.isNumeric(jQuery.trim($("#Option_ExitPrice").val()))) {
+                alert("numeric");
+            }
+            else {
+                alert("not numeric");
+            }
+        }
     </script>
 }

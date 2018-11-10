@@ -1,0 +1,71 @@
+﻿@model OptionTracker.Models.Trade
+
+@{
+    ViewData["Title"] = "Details";
+    var controllerName = this.ViewContext.RouteData.Values["controller"].ToString();
+    var trade = Model;
+}
+
+
+
+<div class="row">
+    <div class="col"><h2>Trade Details</h2></div>
+    <div class="col">
+        <div class="text-right mt-3">
+            @if (controllerName == "Trades")
+            {
+                <a class="btn btn-primary btn-sm" asp-controller="Options" asp-action="Create" asp-route-id="@trade.Tradeid">Add Option</a>
+                <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@trade.Tradeid">Edit Trade</a>
+            }
+        </div>
+    </div>
+</div>
+
+<hr />
+
+<div>
+
+    <div class="container border rounded">
+        <div class="pt-3 pb-3">
+
+
+            <div class="row headers">
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => trade.StockSymbol)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => trade.Description)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => trade.Notes)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => trade.DateEntered)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayNameFor(model => trade.TradeTypeId)
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <strong>@Html.DisplayFor(model => trade.StockSymbol)</strong>
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => trade.Description)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => trade.Notes)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => trade.DateEntered)
+                </div>
+                <div class="col-sm">
+                    @Html.DisplayFor(model => trade.TradeTypes.Description)
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

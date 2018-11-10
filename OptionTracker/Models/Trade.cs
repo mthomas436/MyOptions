@@ -33,7 +33,7 @@ namespace OptionTracker.Models
 
         public string Userid { get; set; }
 
-        [Display(Name = "Option Type")]
+        [Display(Name = "Trade Type")]
         public int TradeTypeId { get; set; }
 
         public TradeType TradeTypes { get; set; }

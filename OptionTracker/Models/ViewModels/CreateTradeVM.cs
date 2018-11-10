@@ -14,13 +14,49 @@ namespace OptionTracker.Models.ViewModels
 
         public bool CloseTrade { get; set; }
 
-        public double TotalTradeCost { get; set; }
-        public double TotalExitPrice { get; set; }
-
-        public CreateTradeVM()
+ 
+        public double? TotalTradeCost
         {
-            this.TotalTradeCost = 0;
-            this.TotalExitPrice = 0;
+            get
+            {
+                double totalTradeCost = 0;
+                foreach (var option in Options)
+                {
+                    totalTradeCost += option.OptionCost.Value;
+                }
+                return totalTradeCost;
+            }
+        }
+
+
+        public double? TotalExitPrice
+        {
+            get
+            {
+                double totalExitPrice = 0;
+                foreach (var option in Options)
+                {
+                    if (option.DateClosed != null)
+                        totalExitPrice += option.ClosingTotalPrice.Value;
+                }
+                return totalExitPrice;
+            }
+        }
+
+
+        public double? TotalProfitLoss
+        {
+            get
+            {
+                double totalPL = 0;
+                foreach (var option in Options)
+                {
+                    if(option.DateClosed != null)
+                        totalPL += option.ProfitLoss.Value;
+                }
+                   
+                return totalPL;
+            }
         }
 
     }

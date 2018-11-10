@@ -1,80 +1,149 @@
 ﻿@model OptionTracker.Models.Option;
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Option Details";
+    Trade trade = Model.Trades;
 }
 
-<div class="row">
-    <div class="col"><h2>Option Details</h2></div>
+
+
+@{await Html.RenderPartialAsync("~/Views/Trades/_tradeHeader.cshtml", trade); }
+
+
+<div class="row mt-5 pl-2 pr-5">
     <div class="col">
-        <div class="text-right mt-3">
-            <a class="btn btn-primary btn-sm" asp-controller="Options" asp-action="Create" asp-route-id="@Model.Trades.Tradeid">Add Option</a>
-            <a class="btn btn-info btn-sm" asp-action="Edit" asp-route-id="@Model.Trades.Tradeid">Edit Trade</a>
-        </div>
-    </div>
-</div>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.OptionType)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.OptionType.Description)
+            </dd>
 
-<hr />
+            <dt>
+                @Html.DisplayNameFor(model => model.StrikePrice)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StrikePrice)
+            </dd>
 
-<div>
-
-    <div class="container border rounded">
-        <div class="pt-3 pb-3">
-
-
-            <div class="row headers">
-                <div class="col-sm">
-                    @Html.DisplayNameFor(model => Model.Trades.StockSymbol)
-                </div>
-                <div class="col-sm">
-                    @Html.DisplayNameFor(model => Model.ExpirationDate)
-                </div>
-                <div class="col-sm">
-                    @Html.DisplayNameFor(model => Model.StrikePrice)
-                </div>                
-                <div class="col-sm">
-                    @Html.DisplayNameFor(model => Model.Quantity)
-                </div>
-                <div class="col-sm">
-                    @Html.DisplayNameFor(model => Model.DateEntered)
-                </div>
-                <div class="col-sm">
-                    @Html.DisplayNameFor(model => Model.EntryPrice)
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm">
-                    <strong>@Html.DisplayFor(model => Model.Trades.StockSymbol)</strong>
-                </div>
-                <div class="col-sm">
-                    @Html.DisplayFor(model => Model.ExpirationDate)
-                </div>
-                <div class="col-sm">
-                    @Html.DisplayFor(model => Model.StrikePrice)
-                </div>                
-                <div class="col-sm">
-                    @Html.DisplayFor(model => Model.Quantity)
-                </div>
-                <div class="col-sm">
-                    @Html.DisplayFor(model => Model.DateEntered)
-                </div>
-                <div class="col-sm">
-                    @Html.DisplayFor(model => Model.EntryPrice)
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
+            <dt>
+                @Html.DisplayNameFor(model => model.DateEntered)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateEntered)
+            </dd>
 
  
+            <dt>
+                @Html.DisplayNameFor(model => model.StockPriceatPurchace)
+            </dt>
+            <dd>
+                @Html.Raw(String.Format("{0:c}", Model.StockPriceatPurchace))
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Commission)
+            </dt>
+            <dd>
+                @Html.Raw(String.Format("{0:c}", Model.Commission))
+            </dd>
  
-<div class="row">
+
+
+        </dl>
+    </div>
     <div class="col">
-        <div class="text-left mt-3">
-            <a class="btn btn-secondary btn-sm" asp-action="Index">Back to Option List</a>
-        </div>
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.StrikePrice)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.StrikePrice)
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Quantity)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Quantity)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.EntryPrice)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.EntryPrice)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.DateClosed)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.DateClosed)
+            </dd>
+
+
+
+        </dl>
+    </div>
+    <div class="col">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.ExitPrice)
+            </dt>
+            <dd>
+                @Html.Raw(String.Format("{0:c}", Model.ExitPrice))
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.OptionCost)
+            </dt>
+            <dd>
+                @Html.Raw(String.Format("{0:c}", Model.OptionCost))
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ClosingTotalPrice)
+            </dt>
+            <dd>
+                @Html.Raw(String.Format("{0:c}", Model.ClosingTotalPrice))
+            </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.ProfitLoss)
+            </dt>
+            <dd>
+                @Html.Raw(String.Format("{0:c}", Model.ProfitLoss))
+            </dd>
+        </dl>
     </div>
 </div>
+
+<div class="row mt-5 pl-2 pr-5">
+    <div class="col">
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => model.Notes)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Notes)
+            </dd>
+        </dl>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+    <div class="row">
+        <div class="col">
+            <div class="text-left mt-3">
+                <a class="btn btn-secondary btn-sm" asp-controller="Trades" asp-action="Details" asp-route-id="@trade.Tradeid">Back to Option List</a>
+            </div>
+        </div>
+    </div>

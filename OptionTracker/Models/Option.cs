@@ -71,6 +71,34 @@ namespace OptionTracker.Models
         [Display(Name = "Option Type")]
         public int OptionTypeId { get; set; }
 
+        [NotMapped]
+        [Display(Name = "Option Cost")]
+        public double? OptionCost
+        {
+            get
+            {
+                return (EntryPrice * 100 * Quantity) + Commission;
+            }
+        }
 
+        [NotMapped]
+        [Display(Name = "Closing Price")]
+        public double? ClosingTotalPrice
+        {
+            get
+            {
+                return (ExitPrice * 100 * Quantity) + Commission;
+            }
+        }
+
+        [NotMapped]
+        [Display(Name = "Profit Loss")]
+        public double? ProfitLoss
+        {
+            get
+            {
+                return ClosingTotalPrice-OptionCost;
+            }
+        }
     }
 }

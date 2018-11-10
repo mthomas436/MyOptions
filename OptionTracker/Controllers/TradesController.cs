@@ -60,22 +60,11 @@ namespace OptionTracker.Controllers
             }
 
             var options = await _repo.GetOptionDetail(id.Value);
-            double totTradeCost = 0;
-            double totExitPrice = 0;
- 
-            foreach(var option in options)
-            {
-                
-                totTradeCost += (option.EntryPrice * 100 * option.Quantity) + option.Commission.Value;
-                if(option.DateClosed != null)
-                    totExitPrice += (option.ExitPrice.Value * 100 * option.Quantity) + option.Commission.Value;
-            }
+
             CreateTradeVM vm = new CreateTradeVM
             {
                 Trade = trade,
-                Options = options,
-                TotalTradeCost = totTradeCost,
-                TotalExitPrice = totExitPrice
+                Options = options
             };
 
             return View(vm);

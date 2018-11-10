@@ -10,7 +10,7 @@ namespace OptionTracker.Models
         [Display(Name = "First Name")]
         public string Firstname { get; set; }
 
-        [Display(Name = "Larst Name")]
+        [Display(Name = "Last Name")]
         public string Lastname { get; set; }
 
         public string PhotoLocation { get; set; }
