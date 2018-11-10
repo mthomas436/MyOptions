@@ -1,4 +1,9 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -30,39 +35,46 @@
 
         <div class="collapse navbar-collapse" id="navbarsExample04">
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" asp-controller="Trades" asp-action="index">My Trades <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Performance</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Member Trades</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
-                    <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                    </div>
-                </li>
+                @if (SignInManager.IsSignedIn(User))
+                {
+                    <li class="nav-item active">
+                        <a class="nav-link" asp-controller="Trades" asp-action="index">My Trades <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Performance</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Member Trades</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Admin</a>
+                        <div class="dropdown-menu" aria-labelledby="dropdown04">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            <a class="dropdown-item" href="#">Something else here</a>
+                        </div>
+                    </li>
+
+                }
+
+
+
             </ul>
             <div class="navinfo my-2 my-md-0">
                 @await Html.PartialAsync("_loginPartial")
             </div>
         </div>
     </nav>
- 
+
     <div class="container body-content mt-3">
         @RenderBody()
         <hr />
-        
+
     </div>
     <footer class="footer">
         <div class="cont">
             <p class="text-muted mt-3">&copy; 2018</p>
-        </div>      
+        </div>
     </footer>
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
