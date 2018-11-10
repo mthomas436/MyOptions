@@ -12,9 +12,11 @@ using Microsoft.AspNetCore.Identity;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 using OptionTracker.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OptionTracker.Controllers
 {
+    [Authorize]
     public class TradesController : Controller
     {
         private readonly ITradeRepository _repo;

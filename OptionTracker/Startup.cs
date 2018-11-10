@@ -13,6 +13,7 @@ using OptionTracker.Data;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OptionTracker.Models;
+using System.Net;
 
 namespace OptionTracker
 {
@@ -64,6 +65,7 @@ namespace OptionTracker
             }
             else
             {
+                app.UseDeveloperExceptionPage();
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
@@ -73,6 +75,19 @@ namespace OptionTracker
             app.UseCookiePolicy();
 
             app.UseAuthentication();
+
+            app.UseStatusCodePages(async c =>
+            {
+                var request = c.HttpContext.Request;
+                var response = c.HttpContext.Response;
+                var path = request.Path.Value ?? "";
+
+                if (response.StatusCode == (int)HttpStatusCode.Unauthorized)
+                {
+                    response.Redirect("~/Identity/Account/Login");
+                }
+            });
+
 
             app.UseMvc(routes =>
             {

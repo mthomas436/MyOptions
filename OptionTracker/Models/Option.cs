@@ -35,18 +35,18 @@ namespace OptionTracker.Models
 
 
         [Required]
-        [Range(1, double.MaxValue, ErrorMessage = "Option Price should be greater than 0")]
+        [Range(0.1, double.MaxValue, ErrorMessage = "Option Price should be greater than 0")]
         [Display(Name= "Option Price at Entry")]
         public double EntryPrice { get; set; }
 
 
         [Required]
         [Display(Name="Stock Price at Purchase")]
-        [Range(1, int.MaxValue, ErrorMessage = "Stock Price at Purchase should be greater than 0")]
+        [Range(0.1, double.MaxValue, ErrorMessage = "Stock Price at Purchase should be greater than 0")]
         public double StockPriceatPurchace { get; set; }
 
         [Display(Name="Exit Price")]
-        [Range(1, int.MaxValue, ErrorMessage = "Exit Price should be greater than 0")]
+        [Range(0.1, double.MaxValue, ErrorMessage = "Exit Price should be greater than 0")]
         public double? ExitPrice { get; set; }
 
 

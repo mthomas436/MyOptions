@@ -108,7 +108,12 @@ namespace OptionTracker.Areas.Identity.Pages.Account
                         await _roleManager.CreateAsync(new IdentityRole(SD.AdminSuperEndUser));
                     }
 
-                    if(Input.IsSuperAdmin)
+                    if (!await _roleManager.RoleExistsAsync(SD.Member))
+                    {
+                        await _roleManager.CreateAsync(new IdentityRole(SD.Member));
+                    }
+
+                    if (Input.IsSuperAdmin)
                     {
                         await _userManager.AddToRoleAsync(user, SD.AdminSuperEndUser);
                     }

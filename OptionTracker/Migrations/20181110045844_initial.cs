@@ -40,11 +40,33 @@ namespace OptionTracker.Migrations
                     TwoFactorEnabled = table.Column<bool>(nullable: false),
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
-                    AccessFailedCount = table.Column<int>(nullable: false)
+                    AccessFailedCount = table.Column<int>(nullable: false),
+                    Firstname = table.Column<string>(nullable: true),
+                    Lastname = table.Column<string>(nullable: true),
+                    PhotoLocation = table.Column<string>(nullable: true),
+                    City = table.Column<string>(nullable: true),
+                    State = table.Column<string>(nullable: true),
+                    Country = table.Column<string>(nullable: true),
+                    Comments = table.Column<string>(nullable: true),
+                    CreatedDate = table.Column<DateTime>(nullable: false),
+                    Active = table.Column<bool>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OptionTypes",
+                columns: table => new
+                {
+                    OptionTypeId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OptionTypes", x => x.OptionTypeId);
                 });
 
             migrationBuilder.CreateTable(
@@ -189,6 +211,12 @@ namespace OptionTracker.Migrations
                         principalTable: "TradeTypes",
                         principalColumn: "TradeTypeId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Trades_AspNetUsers_Userid",
+                        column: x => x.Userid,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -200,12 +228,12 @@ namespace OptionTracker.Migrations
                     ExpirationDate = table.Column<DateTime>(type: "Date", nullable: false),
                     StrikePrice = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    DateEntered = table.Column<DateTime>(nullable: false),
+                    DateEntered = table.Column<DateTime>(type: "Date", nullable: false),
                     EntryPrice = table.Column<double>(nullable: false),
                     StockPriceatPurchace = table.Column<double>(nullable: false),
                     ExitPrice = table.Column<double>(nullable: true),
                     Commission = table.Column<double>(nullable: true),
-                    DateClosed = table.Column<DateTime>(nullable: true),
+                    DateClosed = table.Column<DateTime>(type: "Date", nullable: true),
                     Notes = table.Column<string>(nullable: true),
                     Tradeid = table.Column<int>(nullable: false),
                     OptionTypeId = table.Column<int>(nullable: false)
@@ -214,31 +242,17 @@ namespace OptionTracker.Migrations
                 {
                     table.PrimaryKey("PK_Options", x => x.Optionid);
                     table.ForeignKey(
+                        name: "FK_Options_OptionTypes_OptionTypeId",
+                        column: x => x.OptionTypeId,
+                        principalTable: "OptionTypes",
+                        principalColumn: "OptionTypeId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Options_Trades_Tradeid",
                         column: x => x.Tradeid,
                         principalTable: "Trades",
                         principalColumn: "Tradeid",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OptionTypes",
-                columns: table => new
-                {
-                    OptionTypeId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Description = table.Column<string>(nullable: true),
-                    Optionid = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OptionTypes", x => x.OptionTypeId);
-                    table.ForeignKey(
-                        name: "FK_OptionTypes_Options_Optionid",
-                        column: x => x.Optionid,
-                        principalTable: "Options",
-                        principalColumn: "Optionid",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -281,19 +295,24 @@ namespace OptionTracker.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Options_OptionTypeId",
+                table: "Options",
+                column: "OptionTypeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Options_Tradeid",
                 table: "Options",
                 column: "Tradeid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OptionTypes_Optionid",
-                table: "OptionTypes",
-                column: "Optionid");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Trades_TradeTypeId",
                 table: "Trades",
                 column: "TradeTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Trades_Userid",
+                table: "Trades",
+                column: "Userid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -314,22 +333,22 @@ namespace OptionTracker.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "OptionTypes");
+                name: "Options");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Options");
+                name: "OptionTypes");
 
             migrationBuilder.DropTable(
                 name: "Trades");
 
             migrationBuilder.DropTable(
                 name: "TradeTypes");
+
+            migrationBuilder.DropTable(
+                name: "AspNetUsers");
         }
     }
 }

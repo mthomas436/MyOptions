@@ -10,8 +10,8 @@ using OptionTracker.Data;
 namespace OptionTracker.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20181105011100_ExtendedUserRole1")]
-    partial class ExtendedUserRole1
+    [Migration("20181110045844_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
